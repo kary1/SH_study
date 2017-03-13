@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.hw.entity.Dept" table="dept">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+
+        <property name="deptName" column="dept_name"/>
+        <property name="description" column="dept_desc"/>
+        
+        <!-- 双向一对多自身关联start -->
+        <many-to-one name="parent" column="parent_deptid"></many-to-one>
+        <set name="children">
+        	<key column="parent_deptid"></key>
+        	<one-to-many class="com.hw.entity.Dept"/>
+        </set>
+        <!-- 双向一对多自身关联end -->
+        
+        <set name="empSet">
+        	<key column="dept_id"></key>
+        	<one-to-many class="com.hw.entity.Employee"/>
+        </set> 
+
+    </class>
+
+</hibernate-mapping>
