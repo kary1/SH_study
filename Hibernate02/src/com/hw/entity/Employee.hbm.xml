@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.hw.entity.Employee" table="employee">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" column="name"/>
+        <property name="age" column="age"/>
+        <property name="gender" column="gender"/>
+        
+        <set name="hobbies" table="emp_hobbies" cascade="all">
+        	<key column="emp_id"></key>
+        	<element type="string" column="hobby"></element>
+        </set>
+        
+        <list name="addresses" table="emp_address">
+        	<key column="emp_id"></key>
+        	<list-index column="address_sort"></list-index>
+        	<element type="string" column="address"></element>
+        </list>
+        
+        <many-to-one name="dept" column="dept_id"></many-to-one>
+        
+        <many-to-one name="account" column="account_id" unique="true"></many-to-one>
+		
+		<query name="queryAllByName">
+			<![CDATA[from Employee where name = :name]]>
+		</query>
+    </class>
+    
+    <query name="queryAllEmployee">
+    	<![CDATA[from Employee where age = :age]]>
+    </query>
+
+</hibernate-mapping>

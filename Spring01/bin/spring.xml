@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	"
+	default-autowire="default"
+	>
+	<bean scope="prototype" class="com.hw.dao.UserDaoImpl"></bean>
+	
+	<bean id="userDao1" class="com.hw.dao.UserDaoImpl"></bean>
+	
+	<bean id = "userDao01" name="userDao2;userDao3" class="com.hw.dao.UserDaoImpl"></bean>
+	
+	<alias name="userDao2" alias="userDao002"/>
+	
+	<bean id="userService" class="com.hw.service.UserServiceImpl">
+		<property name="userDao" ref="userDao1" ></property>
+		<property name="userName" value="zhangsan"></property>
+		<constructor-arg index="1" value="长安街100号">
+		</constructor-arg>
+		<constructor-arg index="0" value="red">
+		</constructor-arg>
+		<constructor-arg name="balance" type="double" value="33.3">
+		</constructor-arg>
+		<constructor-arg ref="userDao2">
+		</constructor-arg>
+	</bean>
+	
+	<bean class="com.hw.dao.CarDaoImpl"></bean>
+	<bean name="carDao;carDao1" class="com.hw.dao.CarDaoImpl"></bean>
+	
+	<!-- <bean id="carService" class="com.hw.service.CarServiceImpl"
+	 autowire="byType">
+	</bean> -->
+	
+	<bean id="carService" class="com.hw.service.CarServiceImpl"
+	 autowire="byName">
+	</bean>
+	
+	<bean id="carService1" class="com.hw.service.CarServiceImpl"
+	 autowire="constructor">
+	</bean>
+	
+	<!-- <bean id="carService2" class="com.hw.service.CarServiceImpl"
+	 autowire="autodetect">
+	</bean> -->
+	
+	<bean name="user" class="com.hw.factory.UserFactory" factory-method="getUser">
+		
+	</bean>
+	
+</beans>
